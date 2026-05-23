@@ -2,7 +2,7 @@ services:
   frontend:
     build: .
     ports:
-      - "80:80"
+      - "8766:80"
     depends_on:
       - pocketbase
     restart: unless-stopped
