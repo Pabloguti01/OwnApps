@@ -12,28 +12,32 @@ Funcionalidad principal: gestión de citas online con calendario.
 
 ## Estructura del proyecto
 
+Forma parte del monorepo **OwnApps** (https://github.com/Pabloguti01/OwnApps), como subdirectorio `oscar-barber/`.
+
 ```
-Oscar Barber/
-├── index.html              Landing principal
-├── citas.html              Sistema de reserva (flujo de 5 pasos)
-├── servicios.html          Catálogo completo
-├── contacto.html           Info + formulario
-├── admin.html              Panel privado del barbero (login + calendario de citas)
-├── assets/
-│   └── logo.jpg            Logo del cliente (negro sobre blanco)
-├── css/
-│   ├── styles.css          Estilos globales (variables, header, footer, botones, forms, grid)
-│   ├── calendar.css        Calendario, stepper, time slots, summary card
-│   └── admin.css           Login, KPIs, calendario admin con badges, ficha de cita
-├── js/
-│   ├── config.js           CONFIG DEL NEGOCIO (editar aquí)
-│   ├── storage.js          Wrapper sobre localStorage (clave: ob_appointments_v1)
-│   ├── calendar.js         Render del calendario + cálculo de slots libres
-│   ├── appointments.js     Controlador del flujo de reserva + notificación por email
-│   ├── admin.js            Lógica del panel admin (login, KPIs, calendario, lista, export CSV)
-│   └── main.js             Init común (nav móvil, footer, cards de servicios, form contacto)
-├── README.md               Documentación de despliegue
-└── CLAUDE.md               Este archivo
+OwnApps/
+├── README.md                  Índice del monorepo
+└── oscar-barber/
+    ├── index.html             Landing principal
+    ├── citas.html             Sistema de reserva (flujo de 5 pasos)
+    ├── servicios.html         Catálogo completo
+    ├── contacto.html          Info + formulario
+    ├── admin.html             Panel privado del barbero (login + calendario de citas)
+    ├── assets/
+    │   └── logo.jpg           Logo del cliente (negro sobre blanco)
+    ├── css/
+    │   ├── styles.css         Estilos globales (variables, header, footer, botones, forms, grid)
+    │   ├── calendar.css       Calendario, stepper, time slots, summary card
+    │   └── admin.css          Login, KPIs, calendario admin con badges, ficha de cita
+    ├── js/
+    │   ├── config.js          CONFIG DEL NEGOCIO (editar aquí)
+    │   ├── storage.js         Wrapper sobre localStorage (clave: ob_appointments_v1)
+    │   ├── calendar.js        Render del calendario + cálculo de slots libres
+    │   ├── appointments.js    Controlador del flujo de reserva + notificación por email
+    │   ├── admin.js           Lógica del panel admin (login, KPIs, calendario, lista, export CSV)
+    │   └── main.js            Init común (nav móvil, footer, cards de servicios, form contacto)
+    ├── README.md              Documentación de despliegue
+    └── CLAUDE.md              Este archivo
 ```
 
 ## Configuración (todo en `js/config.js`)
@@ -74,7 +78,11 @@ El envío es **no bloqueante**: si FormSubmit cae o hay rate limit, la cita igua
 
 ## Panel admin (`admin.html`)
 
-Pantalla privada para que el barbero vea las citas guardadas en el navegador que esté usando. **No aparece en el menú público** — se accede solo por URL directa o bookmark.
+Pantalla privada para que el barbero vea las citas guardadas en el navegador que esté usando.
+
+**Doble acceso (decidido el 2026-05-23)**:
+1. **Link discreto en footer-bottom** ("🔒 Acceso barbero") presente en las 4 páginas públicas. Estilo deliberadamente discreto (opacidad reducida, fuente pequeña).
+2. **Long-press de 1.5 s sobre el logo** (header de cualquier página) → redirige a `admin.html`. Implementado en `js/main.js` → `initLogoSecret()`. Útil para que Oscar entre desde móvil sin tener que buscar el enlace.
 
 - **Login**: contraseña en `CFG.admin.password`. Sesión guardada en `sessionStorage` (se borra al cerrar la pestaña).
 - **KPIs**: total de citas, próximas (≥ hoy), hoy, ingresos próximos.
@@ -103,7 +111,7 @@ Pantalla privada para que el barbero vea las citas guardadas en el navegador que
 ## Cómo verlo en local
 
 ```powershell
-cd "C:\Users\pablo\OneDrive\Desktop\Claude Projects\Oscar Barber"
+cd "C:\Users\pablo\OneDrive\Desktop\Claude Projects\OwnApps\oscar-barber"
 python -m http.server 8765
 # luego abrir http://localhost:8765/
 ```
@@ -115,18 +123,38 @@ Get-NetTCPConnection -LocalPort 8765 -State Listen | ForEach-Object { Stop-Proce
 
 `file://` directo también funciona para revisar, pero `localStorage` puede dar problemas en algunos navegadores. Mejor usar el servidor local.
 
+## Repositorio GitHub
+
+- **Repo público**: https://github.com/Pabloguti01/OwnApps
+- **Estructura**: monorepo. Este proyecto es la subcarpeta `oscar-barber/`. El nombre `OwnApps` se eligió como paraguas para futuras apps personales del usuario.
+- **Cuenta GitHub**: `Pabloguti01` (autenticada localmente vía `gh` CLI 2.92).
+- **Branch principal**: `main`.
+- **Remote**: HTTPS con `http.sslBackend=schannel` global (necesario en este Windows para evitar `unable to get local issuer certificate`).
+- **Decisión de visibilidad pública asumida**: el usuario conoce que `config.js` expone email del barbero y contraseña del admin. Ver "Limitaciones conocidas".
+
+Comando para clonar en otra máquina:
+```bash
+git clone https://github.com/Pabloguti01/OwnApps.git
+cd OwnApps/oscar-barber
+python -m http.server 8000
+```
+
 ## Limitaciones conocidas
 
-- **Las citas solo viven en el navegador del cliente** que las creó. Oscar **no las recibe** automáticamente. Si el cliente borra cookies/historia o usa otro dispositivo, esas citas no aparecerán.
-- Dos clientes en dispositivos distintos pueden reservar el mismo hueco (no se sincronizan).
-- No hay autenticación ni panel de administración.
+- **Las citas solo viven en el navegador del cliente** que las creó. Oscar **no las recibe** automáticamente en el admin local — la notificación por email es la vía real. Pendiente: sincronización vía backend (pospuesta por decisión del usuario el 2026-05-23, quiere abordarla de otra manera más adelante).
+- Dos clientes en dispositivos distintos pueden reservar el mismo hueco (no se sincronizan hasta tener backend).
+- **Datos expuestos en el repo público** (`oscar-barber/js/config.js`): email del barbero (`pabloguti1006@gmail.com`) y contraseña del admin (`oscar1234`). Riesgos asumidos por el usuario:
+  - El email recibirá spam con el tiempo (scrapers de GitHub).
+  - La contraseña del admin es trivial y descubrible — la "protección" del panel es solo cosmética.
+  - **Recomendaciones para producción real**: crear un email dedicado (`oscarbarber.citas@gmail.com` o similar), cambiar la contraseña a algo único y largo, o mover la auth a backend.
 
 ## Próximos pasos sugeridos
 
-- Envío de la reserva por email/WhatsApp a Oscar (Formspree, EmailJS, Web3Forms, o un POST a Google Sheets/Apps Script).
-- Panel de administración protegido para que Oscar gestione las citas.
-- Migrar a backend ligero (Firebase, Supabase) si el volumen crece.
+- **Backend para sincronizar todas las citas** entre el navegador del cliente y el del barbero (pospuesto por el usuario el 2026-05-23 — quiere abordarlo "de otra manera"; opciones discutidas y archivadas: Google Apps Script + Sheets, Firebase Firestore, Supabase).
+- Antes de pasar a producción real: rotar contraseña admin y mover el `emailTo` a un buzón dedicado, no al personal.
+- Activar el envío vía FormSubmit confirmando el primer email de activación.
 - Confirmación por SMS/WhatsApp con la dirección donde se hará el servicio (relevante porque es a domicilio).
+- Considerar GitHub Pages para hospedar el sitio (`Settings → Pages → main branch / oscar-barber folder`) — gratis y se actualiza con cada push.
 
 ## Historial de decisiones tomadas
 
@@ -138,6 +166,10 @@ Get-NetTCPConnection -LocalPort 8765 -State Listen | ForEach-Object { Stop-Proce
 - **Card de "Profesionales expertos"** renombrada a "Profesional con experiencia" (singular), porque Oscar trabaja solo. La descripción se reescribió para mencionarle por nombre y enfatizar el trato a domicilio.
 - **Notificaciones por email** vía FormSubmit elegidas frente a EmailJS / Formspree / mailto: porque (a) no requieren registro previo ni API key visible, (b) son gratuitas, (c) funcionan con un fetch sencillo, (d) el envío es silencioso para el cliente. Tradeoff: hay que confirmar la activación la primera vez por dirección.
 - **Panel admin separado** en `admin.html` con contraseña ligera y `sessionStorage`. No se enlaza desde el menú público para no exponer la existencia del panel a visitantes casuales.
+- **Doble acceso al admin** (footer link + long-press en logo) decidido tras pregunta explícita al usuario. El long-press se eligió frente a triple clic porque triple clic forzaba un delay de 400 ms en la navegación normal del logo, mientras que long-press deja el clic normal intacto.
+- **Estructura monorepo en `OwnApps/`**: el usuario quiso un repo paraguas para varias apps personales en lugar de un repo dedicado a Oscar Barber. El proyecto vive en la subcarpeta `oscar-barber/`. Local: `Claude Projects/OwnApps/oscar-barber/`. La carpeta local antigua `Oscar Barber/` quedó vacía y bloqueada por OneDrive — limpieza pendiente cuando OneDrive libere el handle.
+- **Visibilidad del repo pública** (asumiendo el riesgo de exponer email y contraseña del admin). Esta decisión es explícita del usuario para poder mostrar el proyecto.
+- **`gh` CLI 2.92 instalado vía winget** (`--source winget` explícito por error de cert en msstore). Configuración global de git ajustada con `http.sslBackend=schannel` para resolver "unable to get local issuer certificate".
 
 ## Convenciones para futuros cambios
 
