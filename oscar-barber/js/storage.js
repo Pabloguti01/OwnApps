@@ -1,11 +1,27 @@
 /* ============================================================
    Oscar Barber — Persistencia de citas en localStorage
+
+   Esquema actual (v2):
+   {
+     id, createdAt,
+     serviceId, serviceName, durationMin, price,
+     date,         // 'YYYY-MM-DD'
+     startMin,     // minutos desde medianoche (ej. 600 para 10:00)
+     endMin,       // startMin + durationMin
+     customer: { name, phone, email, notes },
+     address,      // dirección de servicio a domicilio
+     addressNotes, // referencias para llegar
+     status        // 'confirmed' | 'cancelled'
+   }
+
+   Esquema v1 (legacy) usaba `time: "HH:MM"` y no tenía address.
+   Se migra automáticamente al leer.
    ============================================================ */
 
 (function () {
-    const STORAGE_KEY = "ob_appointments_v1";
+    const STORAGE_KEY = "ob_appointments_v1"; // mantenemos la clave para no perder datos
 
-    function readAll() {
+    function readRaw() {
         try {
             const raw = localStorage.getItem(STORAGE_KEY);
             if (!raw) return [];
@@ -27,8 +43,35 @@
         }
     }
 
+    function parseTimeStr(str) {
+        if (typeof str !== "string") return null;
+        const [h, m] = str.split(":").map(Number);
+        if (Number.isNaN(h) || Number.isNaN(m)) return null;
+        return h * 60 + m;
+    }
+
+    function migrate(record) {
+        // v1 → v2: convertir time → startMin/endMin
+        if (record.startMin == null && record.time) {
+            const start = parseTimeStr(record.time);
+            if (start != null) {
+                record.startMin = start;
+                record.endMin = start + (record.durationMin || 30);
+            }
+        }
+        if (record.address == null) record.address = "";
+        if (record.addressNotes == null) record.addressNotes = "";
+        if (!record.status) record.status = "confirmed";
+        return record;
+    }
+
+    function readAll() {
+        return readRaw().map(migrate);
+    }
+
     function generateId() {
-        return "ob_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+        const rand = Math.floor(Math.random() * 9000) + 1000;
+        return "OB-" + Date.now().toString(36).toUpperCase().slice(-4) + rand;
     }
 
     const OBStorage = {
@@ -46,23 +89,42 @@
             return readAll().filter(a => a.date === dateStr);
         },
 
+        /**
+         * Guarda o actualiza una cita. Acepta el formato nuevo
+         * (con startMin/endMin/address) o el formato antiguo (con time)
+         * por compatibilidad.
+         */
         save(appointment) {
             const list = readAll();
+            const durationMin = appointment.durationMin || 30;
+
+            // Resolver startMin (acepta legacy `time`)
+            let startMin = appointment.startMin;
+            if (startMin == null && appointment.time) {
+                startMin = parseTimeStr(appointment.time);
+            }
+            const endMin = appointment.endMin != null
+                ? appointment.endMin
+                : (startMin != null ? startMin + durationMin : null);
+
             const record = {
                 id: appointment.id || generateId(),
                 createdAt: appointment.createdAt || new Date().toISOString(),
                 serviceId: appointment.serviceId,
                 serviceName: appointment.serviceName,
-                durationMin: appointment.durationMin,
+                durationMin: durationMin,
                 price: appointment.price,
                 date: appointment.date,
-                time: appointment.time,
+                startMin: startMin,
+                endMin: endMin,
                 customer: {
                     name: appointment.customer?.name || "",
                     phone: appointment.customer?.phone || "",
                     email: appointment.customer?.email || "",
                     notes: appointment.customer?.notes || "",
                 },
+                address: appointment.address || "",
+                addressNotes: appointment.addressNotes || "",
                 status: appointment.status || "confirmed",
             };
 

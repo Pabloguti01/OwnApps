@@ -5,12 +5,13 @@
 
 window.OB_CONFIG = {
     business: {
-        name: "Oscar Barber",
+        name: "OscarBarber",
         tagline: "Barbería a domicilio.",
-        phone: "+34 600 000 000",
+        city: "Sevilla",
+        phone: "+34 666 666 666",  // ← cambiar por el teléfono real de Oscar
         email: "hola@oscarbarber.es",
         instagram: "@oscarbarber",
-        serviceArea: "Servicio a domicilio"
+        serviceArea: "Servicio a domicilio en Sevilla y alrededores"
     },
 
     /*
@@ -21,11 +22,11 @@ window.OB_CONFIG = {
      */
     schedule: {
         0: null,
-        1: [{ open: "09:00", close: "14:00" }],
-        2: [{ open: "09:00", close: "14:00" }],
-        3: [{ open: "09:00", close: "14:00" }],
-        4: [{ open: "09:00", close: "14:00" }],
-        5: [{ open: "09:00", close: "14:00" }],
+        1: [{ open: "10:00", close: "14:00" }],
+        2: [{ open: "10:00", close: "14:00" }],
+        3: [{ open: "10:00", close: "14:00" }],
+        4: [{ open: "10:00", close: "14:00" }],
+        5: [{ open: "10:00", close: "14:00" }],
         6: null,
     },
 
@@ -38,9 +39,10 @@ window.OB_CONFIG = {
     ],
 
     booking: {
-        slotIntervalMin: 15,
-        maxDaysAhead: 60,
-        minLeadTimeMin: 30,
+        slotIntervalMin: 15,         // separación entre slots reservables
+        maxDaysAhead: 60,            // hasta cuántos días vista permitir reservar
+        minLeadTimeMin: 30,          // antelación mínima para reservas el mismo día
+        travelBufferMin: 30,         // minutos de traslado entre citas a domicilio
     },
 
     /*
@@ -57,7 +59,8 @@ window.OB_CONFIG = {
     },
 
     /*
-     * Panel de administración (admin.html).
+     * Panel de administración (se abre desde [ADMIN] en el footer o
+     * mediante long-press de 1.5s sobre el logo).
      * La contraseña vive en el cliente (no es seguridad real),
      * solo evita accesos casuales. Cambiala antes de publicar.
      */
@@ -75,18 +78,16 @@ window.OB_CONFIG = {
         {
             id: "corte",
             name: "Corte de pelo",
-            description: "Corte clásico o moderno adaptado a tu estilo, en la comodidad de tu casa.",
+            description: "Lavado opcional, corte a tijera o máquina según el estilo, perfilado de patillas y acabado con producto.",
             durationMin: 30,
             price: 10,
-            icon: "✂"
         },
         {
             id: "corte-barba",
             name: "Corte + Barba",
-            description: "Corte completo combinado con arreglo y perfilado de barba a domicilio.",
-            durationMin: 45,
+            description: "Servicio completo: corte de pelo con todos los pasos + perfilado de barba con navaja, toalla caliente y aceite.",
+            durationMin: 30,
             price: 12,
-            icon: "✂"
         },
     ],
 
@@ -94,9 +95,14 @@ window.OB_CONFIG = {
      * Nombres de los días de la semana en español, lunes-primero.
      */
     weekdays: ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"],
-    weekdaysShort: ["L", "M", "X", "J", "V", "S", "D"],
+    weekdaysShort: ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"],
+    weekdaysOneLetter: ["L", "M", "X", "J", "V", "S", "D"],
     months: [
         "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
         "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    ],
+    monthsShort: [
+        "Ene", "Feb", "Mar", "Abr", "May", "Jun",
+        "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"
     ],
 };

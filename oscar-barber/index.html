@@ -1,129 +1,407 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oscar Barber — Peluquería & Barbería</title>
-    <meta name="description" content="Peluquería y barbería Oscar Barber. Reserva tu cita online de forma rápida y sencilla.">
-    <link rel="stylesheet" href="css/styles.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OscarBarber · Barbería a domicilio en Sevilla</title>
+<meta name="description" content="Oscar te corta el pelo donde tú estés. Reserva tu cita en menos de un minuto." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-    <header class="site-header">
-        <div class="container header-inner">
-            <a href="index.html" class="logo" aria-label="Oscar Barber — Inicio">
-                <img src="assets/logo.jpg" alt="Oscar Barber" class="logo-img">
-            </a>
-            <nav class="main-nav" aria-label="Navegación principal">
-                <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
-                    <span></span><span></span><span></span>
-                </button>
-                <ul class="nav-list">
-                    <li><a href="index.html" class="active">Inicio</a></li>
-                    <li><a href="servicios.html">Servicios</a></li>
-                    <li><a href="citas.html">Reservar cita</a></li>
-                    <li><a href="contacto.html">Contacto</a></li>
-                </ul>
-            </nav>
+
+<!-- ====================== NAV ====================== -->
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#top" class="brand">
+      <img src="assets/logo.jpg" alt="OscarBarber" />
+      <span>OSCAR<span class="accent">BARBER</span><span class="dot"></span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#proceso">Cómo funciona</a></li>
+      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#sobre">Sobre Oscar</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <div class="nav-actions">
+      <div class="nav-phone"><span class="pulse"></span> <span data-bind="phone">666 666 666</span></div>
+      <button class="btn btn-primary btn-sm" data-action="book">Reservar cita</button>
+    </div>
+  </div>
+</header>
+
+<!-- ====================== HERO ====================== -->
+<section class="hero" id="top">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">Barbería a domicilio · <span data-bind="city">Sevilla</span></span>
+        <h1>
+          <span class="line">Yo voy</span>
+          <span class="line outline">a tu</span>
+          <span class="line"><span class="accent">casa</span>.</span>
+        </h1>
+        <p class="lede">
+          Sin colas, sin desplazarte, sin sala de espera. Oscar acude con todo el material a donde tú estés y te deja con el corte que quieres en menos de una hora.
+        </p>
+        <div class="hero-cta">
+          <button class="btn btn-primary btn-lg" data-action="book">
+            Reservar cita <span class="arrow">→</span>
+          </button>
+          <a href="#servicios" class="btn btn-ghost btn-lg">Ver servicios</a>
         </div>
-    </header>
 
-    <main>
-        <section class="hero">
-            <div class="hero-bg" aria-hidden="true"></div>
-            <div class="container hero-content">
-                <p class="eyebrow">Barbería tradicional · Estilo moderno</p>
-                <h1>El corte perfecto te está esperando.</h1>
-                <p class="hero-sub">Reserva tu cita online en menos de un minuto. Elige día, hora y servicio.</p>
-                <div class="hero-cta">
-                    <a href="citas.html" class="btn btn-primary">Reservar cita</a>
-                    <a href="servicios.html" class="btn btn-ghost">Ver servicios</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="features">
-            <div class="container">
-                <div class="feature-grid">
-                    <article class="feature-card">
-                        <div class="feature-icon" aria-hidden="true">✂</div>
-                        <h3>Profesional con experiencia</h3>
-                        <p>Oscar lleva años perfeccionando cortes clásicos y modernos. Resultado pulido y trato cercano, en tu casa.</p>
-                    </article>
-                    <article class="feature-card">
-                        <div class="feature-icon" aria-hidden="true">🗓</div>
-                        <h3>Reserva online</h3>
-                        <p>Sistema de citas 24/7. Elige el horario que más te convenga.</p>
-                    </article>
-                    <article class="feature-card">
-                        <div class="feature-icon" aria-hidden="true">★</div>
-                        <h3>Atención personalizada</h3>
-                        <p>Cada cliente es único. Tu estilo, nuestra prioridad.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section class="services-preview">
-            <div class="container">
-                <header class="section-header">
-                    <h2>Nuestros servicios</h2>
-                    <p>Selección de los servicios más solicitados.</p>
-                </header>
-                <div class="services-grid" id="services-preview-grid">
-                    <!-- Rellenado por JS -->
-                </div>
-                <div class="section-cta">
-                    <a href="servicios.html" class="btn btn-outline">Ver todos los servicios</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="cta-banner">
-            <div class="container cta-banner-inner">
-                <div>
-                    <h2>¿Listo para tu próximo corte?</h2>
-                    <p>Reserva ahora y elige el horario perfecto para ti.</p>
-                </div>
-                <a href="citas.html" class="btn btn-primary">Reservar cita</a>
-            </div>
-        </section>
-    </main>
-
-    <footer class="site-footer">
-        <div class="container footer-inner">
-            <div class="footer-brand">
-                <img src="assets/logo.jpg" alt="Oscar Barber" class="logo-img logo-img-footer">
-                <p class="footer-tagline">Barbería a domicilio.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Horario</h4>
-                <ul id="footer-schedule"></ul>
-            </div>
-            <div class="footer-col">
-                <h4>Contacto</h4>
-                <ul>
-                    <li>🏠 Servicio a domicilio</li>
-                    <li>📞 <a id="footer-phone-link" href="#"></a></li>
-                    <li>✉ <a id="footer-email-link" href="#"></a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Enlaces</h4>
-                <ul>
-                    <li><a href="servicios.html">Servicios</a></li>
-                    <li><a href="citas.html">Reservar cita</a></li>
-                    <li><a href="contacto.html">Contacto</a></li>
-                </ul>
-            </div>
+        <div class="hero-meta">
+          <div class="item">
+            <div class="num">10€</div>
+            <div class="label">Desde · Corte</div>
+          </div>
+          <div class="item">
+            <div class="num">30 min</div>
+            <div class="label">Máx. por sesión</div>
+          </div>
+          <div class="item">
+            <div class="num" style="font-size: 28px; line-height: 1.1;" data-bind="hours">10:00h–14:00h</div>
+            <div class="label">Lunes – Viernes</div>
+          </div>
         </div>
-        <div class="container footer-bottom">
-            <p>&copy; <span id="current-year"></span> Oscar Barber. Todos los derechos reservados.</p>
-            <a href="admin.html" class="admin-link" title="Acceso para el barbero">🔒 Acceso barbero</a>
-        </div>
-    </footer>
+      </div>
 
-    <script src="js/config.js"></script>
-    <script src="js/storage.js"></script>
-    <script src="js/main.js"></script>
+      <div class="hero-visual">
+        <div class="badge"><span class="dot"></span>Disponible esta semana</div>
+        <div class="hero-logo-frame">
+          <img src="assets/logo.jpg" alt="OscarBarber logo" />
+        </div>
+        <div class="hero-strip">
+          <span>Corte 10€</span>
+          <span class="sep"></span>
+          <span>Barba 12€</span>
+          <span class="sep"></span>
+          <span>L–V <span data-bind="hours">10:00h–14:00h</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== TICKER ====================== -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>Barbería a domicilio</span><span class="sep"></span>
+    <span>Corte 10€</span><span class="sep"></span>
+    <span>Corte + barba 12€</span><span class="sep"></span>
+    <span>Sevilla</span><span class="sep"></span>
+    <span>Reserva online</span><span class="sep"></span>
+    <span>Barbería a domicilio</span><span class="sep"></span>
+    <span>Corte 10€</span><span class="sep"></span>
+    <span>Corte + barba 12€</span><span class="sep"></span>
+    <span>Sevilla</span><span class="sep"></span>
+    <span>Reserva online</span><span class="sep"></span>
+  </div>
+</div>
+
+<!-- ====================== SERVICIOS ====================== -->
+<section class="section" id="servicios">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="section-num">01 · Servicios</span>
+        <h2 class="section-title">Dos servicios.<br/>Cero complicaciones.</h2>
+      </div>
+      <div class="right">Pago en efectivo · Sin propinas obligatorias</div>
+    </div>
+    <p class="section-lead">Todo el material esterilizado, capa, cepillado y producto incluidos. Tú solo pones la silla.</p>
+
+    <div class="services-grid">
+      <article class="service-card">
+        <div class="ico">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.12 15.88M14.47 14.48 20 20M8.12 8.12 12 12"/></svg>
+        </div>
+        <h3>Corte de pelo</h3>
+        <p>Consulta, lavado opcional, corte a tijera o máquina según el estilo, perfilado de patillas y acabado con producto.</p>
+        <div class="row">
+          <div class="price">10€</div>
+          <div class="duration">Duración<strong>30 min</strong></div>
+        </div>
+      </article>
+
+      <article class="service-card">
+        <div class="ico">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18 18 4M14 4h6v6M14 14l6 6"/></svg>
+        </div>
+        <h3>Corte + Barba</h3>
+        <p>Servicio completo: corte de pelo con todos los pasos + perfilado de barba con navaja, toalla caliente y aceite.</p>
+        <div class="row">
+          <div class="price">12€</div>
+          <div class="duration">Duración<strong>30 min</strong></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== PROCESO ====================== -->
+<section class="section process" id="proceso">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="section-num">02 · Cómo funciona</span>
+        <h2 class="section-title">Cuatro pasos.<br/>Y estás listo.</h2>
+      </div>
+      <div class="right">Servicio puerta a puerta</div>
+    </div>
+
+    <div class="process-grid">
+      <div class="process-step">
+        <span class="step-num">01</span>
+        <h4>Reservas online</h4>
+        <p>Eliges servicio, día y hora desde el calendario. Te lleva menos de un minuto.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">02</span>
+        <h4>Te confirmamos</h4>
+        <p>Oscar te escribe por WhatsApp el día anterior para confirmar dirección y detalles.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">03</span>
+        <h4>Llega a tu casa</h4>
+        <p>Aparece puntual con maquinilla, tijeras, navaja, capa y todo el material necesario.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">04</span>
+        <h4>Pagas y listo</h4>
+        <p>Cobro en efectivo al terminar. Le dejas la silla limpia y él se ocupa del resto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== GALERÍA ====================== -->
+<section class="section" id="galeria">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="section-num">03 · Galería</span>
+        <h2 class="section-title">El trabajo<br/>habla solo.</h2>
+      </div>
+      <div class="right">Últimos cortes · @oscarbarber</div>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-item tall">
+        <span class="tag">Fade alto</span>
+        <div class="placeholder"><span class="label">[ FOTO 4:5 ]</span></div>
+      </div>
+      <div class="gallery-item">
+        <span class="tag">Texturizado</span>
+        <div class="placeholder"><span class="label">[ FOTO ]</span></div>
+      </div>
+      <div class="gallery-item">
+        <span class="tag">Barba navaja</span>
+        <div class="placeholder"><span class="label">[ FOTO ]</span></div>
+      </div>
+      <div class="gallery-item wide">
+        <span class="tag">Antes / Después</span>
+        <div class="placeholder"><span class="label">[ FOTO 8:5 ]</span></div>
+      </div>
+      <div class="gallery-item">
+        <span class="tag">Clásico lateral</span>
+        <div class="placeholder"><span class="label">[ FOTO ]</span></div>
+      </div>
+      <div class="gallery-item">
+        <span class="tag">Corte niño</span>
+        <div class="placeholder"><span class="label">[ FOTO ]</span></div>
+      </div>
+      <div class="gallery-item">
+        <span class="tag">Diseño raya</span>
+        <div class="placeholder"><span class="label">[ FOTO ]</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== SOBRE OSCAR ====================== -->
+<section class="section about" id="sobre">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-portrait">
+        <div class="stamp">[ Retrato Oscar ]</div>
+      </div>
+
+      <div class="about-content">
+        <span class="section-num">04 · Sobre Oscar</span>
+        <h2 class="section-title">Diez años<br/>con la maquinilla.</h2>
+
+        <p>Empecé cortando a amigos en el salón de mi casa. Hoy es mi profesión. Llevo más de diez años dedicándome a esto y un día decidí que en lugar de que vinieran al local, iría yo a por ellos.</p>
+        <p>Lo monto todo en cinco minutos. Donde tú estés, queda como una barbería. Sin prisa, hablando de lo que quieras y sin tener que coger el coche al terminar.</p>
+
+        <div class="quote">"Una buena barbería no es un local. Es estar a gusto."</div>
+
+        <div class="signature">— Oscar</div>
+
+        <div class="tags">
+          <span class="tag-chip">Tijera y máquina</span>
+          <span class="tag-chip">Navaja clásica</span>
+          <span class="tag-chip">Fade técnico</span>
+          <span class="tag-chip">Material esterilizado</span>
+          <span class="tag-chip">Material propio</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== CTA BANNER ====================== -->
+<section class="cta-banner">
+  <div class="container">
+    <div class="row">
+      <div>
+        <h2>Reserva<br/>en un minuto.</h2>
+        <p class="lead">Calendario en tiempo real con la disponibilidad real de Oscar. Eliges, confirmas y listo.</p>
+      </div>
+      <button class="btn btn-primary btn-lg" data-action="book">
+        Reservar ahora <span class="arrow">→</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== CONTACTO ====================== -->
+<section class="contact" id="contacto">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="section-num">05 · Contacto</span>
+        <h2 class="section-title">¿Dudas?<br/>Pregunta sin más.</h2>
+      </div>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.33 1.85.56 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+        </div>
+        <h4>Teléfono</h4>
+        <p><a data-bind="phone-tel" href="tel:666666666"><span data-bind="phone">666 666 666</span></a></p>
+        <p style="font-size:13px; color:var(--muted); margin-top:6px;">Llamadas y WhatsApp</p>
+      </div>
+
+      <div class="contact-card">
+        <div class="ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.91 1.18 4 4 0 0 1 7.91-1.18z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </div>
+        <h4>Instagram</h4>
+        <p><a href="#" target="_blank" data-bind="instagram">@oscarbarber</a></p>
+        <p style="font-size:13px; color:var(--muted); margin-top:6px;">Últimos cortes y novedades</p>
+      </div>
+
+      <div class="contact-card">
+        <div class="ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h4>Horario</h4>
+        <p>Lunes – Viernes</p>
+        <p style="font-size:13px; color:var(--muted); margin-top:6px;"><span data-bind="hours">10:00h – 14:00h</span> · Cerrado fines de semana</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div>© <span data-bind="year">2026</span> OscarBarber · <span data-bind="city">Sevilla</span></div>
+      <div>HECHO CON · TIJERA · NAVAJA · MAQUINILLA</div>
+      <div class="admin-link" data-action="open-admin" title="Panel admin">[ ADMIN ]</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ====================== BOOKING MODAL ====================== -->
+<div class="modal-backdrop" id="booking-modal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="wizard-title">
+    <div class="modal-header">
+      <div class="modal-title" id="wizard-title"></div>
+      <button class="modal-close" id="btn-close-modal" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="step-indicator" id="step-indicator"></div>
+    <div class="modal-body" id="wizard-body"></div>
+    <div class="modal-footer" id="wizard-footer">
+      <div class="summary" id="wizard-summary"></div>
+      <div class="actions">
+        <button class="btn btn-dark" id="btn-prev">← Atrás</button>
+        <button class="btn btn-primary" id="btn-next">Continuar →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====================== ADMIN LOGIN MODAL ====================== -->
+<div class="modal-backdrop" id="admin-login-modal">
+  <div class="modal" style="max-width:420px;" role="dialog" aria-modal="true" aria-labelledby="admin-login-title">
+    <div class="modal-header">
+      <div class="modal-title" id="admin-login-title"><span class="step-pill">ADMIN</span>Acceso privado</div>
+      <button class="modal-close" id="btn-close-admin-login" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="step-sub">Introduce la contraseña para abrir el panel del barbero.</p>
+      <form id="admin-login-form" autocomplete="off">
+        <div class="form-row">
+          <div class="form-field" id="field-admin-pass">
+            <label>Contraseña</label>
+            <input type="password" id="inp-admin-pass" autocomplete="current-password" />
+            <div class="hint" id="admin-login-hint">La sesión se cierra al cerrar la pestaña.</div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-top:18px; width:100%;">Entrar</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ====================== ADMIN SHELL ====================== -->
+<div class="admin-shell" id="admin-shell">
+  <div class="admin-bar">
+    <div class="left">
+      <span class="badge">ADMIN</span>
+      <h1>Panel · OscarBarber</h1>
+    </div>
+    <div class="right">
+      <span class="mono" style="font-size:12px; color:var(--muted); letter-spacing:0.08em;" id="admin-clock"></span>
+      <button class="btn btn-dark btn-sm" id="admin-export">Exportar CSV</button>
+      <button class="btn btn-dark btn-sm" id="admin-close">Salir</button>
+    </div>
+  </div>
+
+  <div class="admin-tabs">
+    <button class="admin-tab active" data-tab="day">Día</button>
+    <button class="admin-tab" data-tab="week">Semana</button>
+  </div>
+
+  <div class="admin-content">
+    <div class="admin-kpis" id="admin-kpis"></div>
+    <div id="admin-content-area"></div>
+  </div>
+</div>
+
+<!-- Detail drawer (admin) -->
+<div class="detail-drawer" id="detail-drawer">
+  <div class="detail-head">
+    <h3>Detalle de cita</h3>
+    <button class="modal-close" id="detail-close" aria-label="Cerrar">✕</button>
+  </div>
+  <div class="detail-body" id="detail-body"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script src="js/config.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/app.js"></script>
+
 </body>
 </html>
