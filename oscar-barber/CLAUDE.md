@@ -133,6 +133,8 @@ El envío es **no bloqueante**: si FormSubmit cae o hay rate limit, la cita igua
 
 **Modal de login** (`#admin-login-modal`): contraseña en `CFG.admin.password`. Sesión en `sessionStorage` (se borra al cerrar la pestaña). Si la contraseña es correcta, abre el panel.
 
+El valor guardado en `sessionStorage` es un **token determinístico derivado de la contraseña actual** (`sessionToken()` en `app.js`), no un literal `"ok"`. Beneficio: si cambias la contraseña en `config.js`, todas las sesiones activas en cualquier pestaña se invalidan automáticamente y vuelven a pedir login.
+
 **Panel** (full-screen overlay):
 - **Barra superior**: badge ADMIN, título, reloj live, botón "Exportar CSV", botón "Salir" (cierra sesión).
 - **Tabs**: Día / Semana.
@@ -231,6 +233,7 @@ python -m http.server 8000
 - **Galería y retrato como placeholders** hasta tener material real (decisión explícita del usuario).
 - **Buffer de 30 min entre citas a domicilio** (`booking.travelBufferMin`): el algoritmo de slots descarta cualquier hora que no deje ese margen antes/después de una cita existente. Esencial porque Oscar tiene que desplazarse entre clientes.
 - **Hard delete al cancelar citas en admin** (vs soft-delete con status=cancelled): más simple, menos campos a filtrar. Si en el futuro hace falta histórico de canceladas, hay que cambiar `OBStorage.remove` por `OBStorage.markCancelled`.
+- **Bug del admin sin pedir contraseña (resuelto el 2026-05-23)**: tras el rediseño, el panel admin saltaba directo sin pedir login. Causa: el `sessionStorage` mantenía la marca `"ok"` guardada por la versión anterior del admin (misma clave `ob_admin_session_v1`, mismo valor). Como sessionStorage persiste mientras la pestaña esté abierta, el nuevo código la aceptaba como sesión válida. **Fix**: el valor ahora es un token determinístico derivado del password actual (`sessionToken()` en `app.js`). El "ok" antiguo deja de coincidir y se fuerza login. Además, cualquier cambio futuro en `CFG.admin.password` invalida automáticamente las sesiones activas.
 
 ## Convenciones para futuros cambios
 
