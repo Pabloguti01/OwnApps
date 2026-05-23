@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservar cita — Oscar Barber</title>
+    <meta name="description" content="Reserva tu cita en Oscar Barber. Elige servicio, fecha y hora disponibles.">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/calendar.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="Oscar Barber — Inicio">
+                <img src="assets/logo.jpg" alt="Oscar Barber" class="logo-img">
+            </a>
+            <nav class="main-nav" aria-label="Navegación principal">
+                <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+                <ul class="nav-list">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="citas.html" class="active">Reservar cita</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <p class="eyebrow">Reserva online</p>
+                <h1>Pide tu cita</h1>
+                <p class="page-sub">Elige servicio, día y hora. Recibirás un resumen al confirmar.</p>
+            </div>
+        </section>
+
+        <section class="booking">
+            <div class="container booking-layout">
+                <ol class="stepper" aria-label="Pasos de la reserva">
+                    <li class="step active" data-step="1"><span class="step-num">1</span><span class="step-label">Servicio</span></li>
+                    <li class="step" data-step="2"><span class="step-num">2</span><span class="step-label">Fecha</span></li>
+                    <li class="step" data-step="3"><span class="step-num">3</span><span class="step-label">Hora</span></li>
+                    <li class="step" data-step="4"><span class="step-num">4</span><span class="step-label">Datos</span></li>
+                    <li class="step" data-step="5"><span class="step-num">5</span><span class="step-label">Confirmar</span></li>
+                </ol>
+
+                <div class="booking-content">
+                    <!-- Paso 1: Servicios -->
+                    <section class="booking-step is-active" data-step-content="1" aria-labelledby="step1-title">
+                        <h2 id="step1-title">Elige un servicio</h2>
+                        <p class="step-help">Selecciona el servicio que quieras reservar.</p>
+                        <div class="service-options" id="service-options-list">
+                            <!-- Rellenado por JS -->
+                        </div>
+                        <div class="step-actions">
+                            <button type="button" class="btn btn-primary" id="to-step-2" disabled>Continuar</button>
+                        </div>
+                    </section>
+
+                    <!-- Paso 2: Fecha -->
+                    <section class="booking-step" data-step-content="2" aria-labelledby="step2-title" hidden>
+                        <h2 id="step2-title">Elige una fecha</h2>
+                        <p class="step-help">Días en gris no están disponibles.</p>
+                        <div class="calendar" id="calendar">
+                            <div class="calendar-header">
+                                <button type="button" class="calendar-nav" id="cal-prev" aria-label="Mes anterior">‹</button>
+                                <div class="calendar-title" id="cal-title">—</div>
+                                <button type="button" class="calendar-nav" id="cal-next" aria-label="Mes siguiente">›</button>
+                            </div>
+                            <div class="calendar-weekdays" aria-hidden="true">
+                                <span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span>
+                            </div>
+                            <div class="calendar-days" id="cal-days" role="grid"></div>
+                        </div>
+                        <div class="step-actions">
+                            <button type="button" class="btn btn-ghost" data-back="1">Volver</button>
+                            <button type="button" class="btn btn-primary" id="to-step-3" disabled>Continuar</button>
+                        </div>
+                    </section>
+
+                    <!-- Paso 3: Hora -->
+                    <section class="booking-step" data-step-content="3" aria-labelledby="step3-title" hidden>
+                        <h2 id="step3-title">Elige una hora</h2>
+                        <p class="step-help" id="step3-help">Horarios disponibles para la fecha seleccionada.</p>
+                        <div class="time-slots" id="time-slots"></div>
+                        <div class="step-actions">
+                            <button type="button" class="btn btn-ghost" data-back="2">Volver</button>
+                            <button type="button" class="btn btn-primary" id="to-step-4" disabled>Continuar</button>
+                        </div>
+                    </section>
+
+                    <!-- Paso 4: Datos -->
+                    <section class="booking-step" data-step-content="4" aria-labelledby="step4-title" hidden>
+                        <h2 id="step4-title">Tus datos</h2>
+                        <p class="step-help">Necesitamos esta información para confirmar tu cita.</p>
+                        <form id="customer-form" class="customer-form" novalidate>
+                            <div class="form-row">
+                                <label for="cust-name">Nombre completo *</label>
+                                <input type="text" id="cust-name" name="name" required autocomplete="name" placeholder="Ej. María García">
+                                <span class="field-error" data-error-for="name"></span>
+                            </div>
+                            <div class="form-row">
+                                <label for="cust-phone">Teléfono *</label>
+                                <input type="tel" id="cust-phone" name="phone" required autocomplete="tel" inputmode="tel" placeholder="Ej. 600 123 456">
+                                <span class="field-error" data-error-for="phone"></span>
+                            </div>
+                            <div class="form-row">
+                                <label for="cust-email">Email</label>
+                                <input type="email" id="cust-email" name="email" autocomplete="email" placeholder="opcional">
+                                <span class="field-error" data-error-for="email"></span>
+                            </div>
+                            <div class="form-row">
+                                <label for="cust-notes">Notas / preferencias</label>
+                                <textarea id="cust-notes" name="notes" rows="3" placeholder="¿Algo que debamos saber? (opcional)"></textarea>
+                            </div>
+                        </form>
+                        <div class="step-actions">
+                            <button type="button" class="btn btn-ghost" data-back="3">Volver</button>
+                            <button type="button" class="btn btn-primary" id="to-step-5">Continuar</button>
+                        </div>
+                    </section>
+
+                    <!-- Paso 5: Confirmar -->
+                    <section class="booking-step" data-step-content="5" aria-labelledby="step5-title" hidden>
+                        <h2 id="step5-title">Confirma tu cita</h2>
+                        <p class="step-help">Revisa los datos antes de confirmar.</p>
+                        <div class="summary-card" id="summary-card">
+                            <!-- Rellenado por JS -->
+                        </div>
+                        <div class="step-actions">
+                            <button type="button" class="btn btn-ghost" data-back="4">Volver</button>
+                            <button type="button" class="btn btn-primary" id="confirm-booking">Confirmar reserva</button>
+                        </div>
+                    </section>
+
+                    <!-- Confirmación final -->
+                    <section class="booking-step" data-step-content="done" aria-labelledby="done-title" hidden>
+                        <div class="done-card">
+                            <div class="done-icon" aria-hidden="true">✓</div>
+                            <h2 id="done-title">¡Cita confirmada!</h2>
+                            <p>Hemos guardado tu reserva. Te esperamos en Oscar Barber.</p>
+                            <div class="summary-card" id="done-summary-card"></div>
+                            <div class="step-actions step-actions-center">
+                                <a href="index.html" class="btn btn-ghost">Volver al inicio</a>
+                                <button type="button" class="btn btn-primary" id="new-booking">Pedir otra cita</button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Resumen lateral -->
+                <aside class="booking-aside" aria-label="Resumen de la reserva">
+                    <h3>Resumen</h3>
+                    <dl class="aside-summary">
+                        <dt>Servicio</dt><dd id="aside-service">—</dd>
+                        <dt>Duración</dt><dd id="aside-duration">—</dd>
+                        <dt>Precio</dt><dd id="aside-price">—</dd>
+                        <dt>Fecha</dt><dd id="aside-date">—</dd>
+                        <dt>Hora</dt><dd id="aside-time">—</dd>
+                    </dl>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <img src="assets/logo.jpg" alt="Oscar Barber" class="logo-img logo-img-footer">
+                <p class="footer-tagline">Barbería a domicilio.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Horario</h4>
+                <ul id="footer-schedule"></ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <ul>
+                    <li>🏠 Servicio a domicilio</li>
+                    <li>📞 <a id="footer-phone-link" href="#"></a></li>
+                    <li>✉ <a id="footer-email-link" href="#"></a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Enlaces</h4>
+                <ul>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="citas.html">Reservar cita</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; <span id="current-year"></span> Oscar Barber. Todos los derechos reservados.</p>
+            <a href="admin.html" class="admin-link" title="Acceso para el barbero">🔒 Acceso barbero</a>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/appointments.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

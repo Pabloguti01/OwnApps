@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Panel · Oscar Barber</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/calendar.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="Oscar Barber — Inicio">
+                <img src="assets/logo.jpg" alt="Oscar Barber" class="logo-img">
+            </a>
+            <nav class="main-nav" aria-label="Navegación principal">
+                <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+                <ul class="nav-list">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="citas.html">Reservar cita</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Pantalla de acceso -->
+        <section class="admin-login" id="admin-login">
+            <div class="container">
+                <div class="login-card">
+                    <p class="eyebrow">Acceso restringido</p>
+                    <h1>Panel del barbero</h1>
+                    <p>Introduce la contraseña para ver y gestionar las citas.</p>
+                    <form id="login-form" class="customer-form" novalidate>
+                        <div class="form-row">
+                            <label for="login-pass">Contraseña</label>
+                            <input type="password" id="login-pass" name="password" autocomplete="current-password" autofocus>
+                            <span class="field-error" id="login-error"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Entrar</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Panel principal -->
+        <section class="admin-panel" id="admin-panel" hidden>
+            <div class="container">
+                <header class="admin-header">
+                    <div>
+                        <p class="eyebrow">Panel privado</p>
+                        <h1>Tus citas</h1>
+                        <p class="page-sub">Reservas guardadas en este navegador.</p>
+                    </div>
+                    <div class="admin-actions">
+                        <button type="button" class="btn btn-ghost" id="export-btn">Exportar CSV</button>
+                        <button type="button" class="btn btn-ghost" id="logout-btn">Cerrar sesión</button>
+                    </div>
+                </header>
+
+                <div class="admin-kpis" id="admin-kpis">
+                    <div class="kpi"><span class="kpi-label">Citas totales</span><span class="kpi-value" id="kpi-total">—</span></div>
+                    <div class="kpi"><span class="kpi-label">Próximas (≥ hoy)</span><span class="kpi-value" id="kpi-upcoming">—</span></div>
+                    <div class="kpi"><span class="kpi-label">Hoy</span><span class="kpi-value" id="kpi-today">—</span></div>
+                    <div class="kpi"><span class="kpi-label">Ingresos próximos</span><span class="kpi-value" id="kpi-revenue">—</span></div>
+                </div>
+
+                <div class="admin-layout">
+                    <div class="admin-calendar-wrap">
+                        <div class="calendar admin-calendar">
+                            <div class="calendar-header">
+                                <button type="button" class="calendar-nav" id="adm-prev" aria-label="Mes anterior">‹</button>
+                                <div class="calendar-title" id="adm-title">—</div>
+                                <button type="button" class="calendar-nav" id="adm-next" aria-label="Mes siguiente">›</button>
+                            </div>
+                            <div class="calendar-weekdays" aria-hidden="true">
+                                <span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span>
+                            </div>
+                            <div class="calendar-days" id="adm-days" role="grid"></div>
+                        </div>
+                        <p class="calendar-legend">
+                            <span class="legend-dot legend-dot-has"></span> Días con citas
+                            &nbsp;·&nbsp;
+                            <span class="legend-dot legend-dot-today"></span> Hoy
+                        </p>
+                    </div>
+
+                    <aside class="day-appointments">
+                        <header class="day-header">
+                            <h2 id="day-title">Selecciona un día</h2>
+                            <p class="day-stats" id="day-stats">—</p>
+                        </header>
+                        <div id="day-list" class="day-list">
+                            <p class="empty-msg">Pulsa cualquier día del calendario para ver sus citas.</p>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <img src="assets/logo.jpg" alt="Oscar Barber" class="logo-img logo-img-footer">
+                <p class="footer-tagline">Barbería a domicilio.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Horario</h4>
+                <ul id="footer-schedule"></ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <ul>
+                    <li>🏠 Servicio a domicilio</li>
+                    <li>📞 <a id="footer-phone-link" href="#"></a></li>
+                    <li>✉ <a id="footer-email-link" href="#"></a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Enlaces</h4>
+                <ul>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="citas.html">Reservar cita</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; <span id="current-year"></span> Oscar Barber. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

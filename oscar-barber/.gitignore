@@ -1,0 +1,24 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs / temp
+*.log
+.tmp/
+.cache/
+
+# Node (por si en el futuro se añade)
+node_modules/
+
+# Secretos locales (si llegan a usarse)
+config.local.js
+.env
+.env.local

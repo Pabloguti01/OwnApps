@@ -1,0 +1,129 @@
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oscar Barber — Peluquería & Barbería</title>
+    <meta name="description" content="Peluquería y barbería Oscar Barber. Reserva tu cita online de forma rápida y sencilla.">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="Oscar Barber — Inicio">
+                <img src="assets/logo.jpg" alt="Oscar Barber" class="logo-img">
+            </a>
+            <nav class="main-nav" aria-label="Navegación principal">
+                <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+                <ul class="nav-list">
+                    <li><a href="index.html" class="active">Inicio</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="citas.html">Reservar cita</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-bg" aria-hidden="true"></div>
+            <div class="container hero-content">
+                <p class="eyebrow">Barbería tradicional · Estilo moderno</p>
+                <h1>El corte perfecto te está esperando.</h1>
+                <p class="hero-sub">Reserva tu cita online en menos de un minuto. Elige día, hora y servicio.</p>
+                <div class="hero-cta">
+                    <a href="citas.html" class="btn btn-primary">Reservar cita</a>
+                    <a href="servicios.html" class="btn btn-ghost">Ver servicios</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <div class="feature-grid">
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">✂</div>
+                        <h3>Profesional con experiencia</h3>
+                        <p>Oscar lleva años perfeccionando cortes clásicos y modernos. Resultado pulido y trato cercano, en tu casa.</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">🗓</div>
+                        <h3>Reserva online</h3>
+                        <p>Sistema de citas 24/7. Elige el horario que más te convenga.</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">★</div>
+                        <h3>Atención personalizada</h3>
+                        <p>Cada cliente es único. Tu estilo, nuestra prioridad.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="services-preview">
+            <div class="container">
+                <header class="section-header">
+                    <h2>Nuestros servicios</h2>
+                    <p>Selección de los servicios más solicitados.</p>
+                </header>
+                <div class="services-grid" id="services-preview-grid">
+                    <!-- Rellenado por JS -->
+                </div>
+                <div class="section-cta">
+                    <a href="servicios.html" class="btn btn-outline">Ver todos los servicios</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-banner">
+            <div class="container cta-banner-inner">
+                <div>
+                    <h2>¿Listo para tu próximo corte?</h2>
+                    <p>Reserva ahora y elige el horario perfecto para ti.</p>
+                </div>
+                <a href="citas.html" class="btn btn-primary">Reservar cita</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <img src="assets/logo.jpg" alt="Oscar Barber" class="logo-img logo-img-footer">
+                <p class="footer-tagline">Barbería a domicilio.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Horario</h4>
+                <ul id="footer-schedule"></ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <ul>
+                    <li>🏠 Servicio a domicilio</li>
+                    <li>📞 <a id="footer-phone-link" href="#"></a></li>
+                    <li>✉ <a id="footer-email-link" href="#"></a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Enlaces</h4>
+                <ul>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="citas.html">Reservar cita</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; <span id="current-year"></span> Oscar Barber. Todos los derechos reservados.</p>
+            <a href="admin.html" class="admin-link" title="Acceso para el barbero">🔒 Acceso barbero</a>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

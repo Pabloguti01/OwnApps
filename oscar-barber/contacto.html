@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto — Oscar Barber</title>
+    <meta name="description" content="Contacta con Oscar Barber. Dirección, horario, teléfono y formulario de contacto.">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="Oscar Barber — Inicio">
+                <img src="assets/logo.jpg" alt="Oscar Barber" class="logo-img">
+            </a>
+            <nav class="main-nav" aria-label="Navegación principal">
+                <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+                <ul class="nav-list">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="citas.html">Reservar cita</a></li>
+                    <li><a href="contacto.html" class="active">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <p class="eyebrow">Contacto</p>
+                <h1>Pásate o escríbenos</h1>
+                <p class="page-sub">Estamos aquí para resolver cualquier duda.</p>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <div class="container contact-layout">
+                <div class="contact-info">
+                    <h2>Información</h2>
+                    <ul class="contact-list">
+                        <li>
+                            <span class="contact-icon" aria-hidden="true">🏠</span>
+                            <div>
+                                <strong>Zona de servicio</strong>
+                                <p>Barbería a domicilio. Concierta tu cita y te visitamos en casa.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="contact-icon" aria-hidden="true">📞</span>
+                            <div>
+                                <strong>Teléfono</strong>
+                                <p><a id="contact-phone-link" href="#"></a></p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="contact-icon" aria-hidden="true">✉</span>
+                            <div>
+                                <strong>Email</strong>
+                                <p><a id="contact-email-link" href="#"></a></p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="contact-icon" aria-hidden="true">🕐</span>
+                            <div>
+                                <strong>Horario</strong>
+                                <ul id="contact-schedule"></ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="contact-form-wrap">
+                    <h2>Escríbenos</h2>
+                    <form id="contact-form" class="customer-form" novalidate>
+                        <div class="form-row">
+                            <label for="cf-name">Nombre *</label>
+                            <input type="text" id="cf-name" name="name" required autocomplete="name">
+                            <span class="field-error" data-error-for="name"></span>
+                        </div>
+                        <div class="form-row">
+                            <label for="cf-email">Email *</label>
+                            <input type="email" id="cf-email" name="email" required autocomplete="email">
+                            <span class="field-error" data-error-for="email"></span>
+                        </div>
+                        <div class="form-row">
+                            <label for="cf-message">Mensaje *</label>
+                            <textarea id="cf-message" name="message" rows="5" required></textarea>
+                            <span class="field-error" data-error-for="message"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+                        <p class="form-feedback" id="cf-feedback" role="status"></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <img src="assets/logo.jpg" alt="Oscar Barber" class="logo-img logo-img-footer">
+                <p class="footer-tagline">Barbería a domicilio.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Horario</h4>
+                <ul id="footer-schedule"></ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <ul>
+                    <li>🏠 Servicio a domicilio</li>
+                    <li>📞 <a id="footer-phone-link" href="#"></a></li>
+                    <li>✉ <a id="footer-email-link" href="#"></a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Enlaces</h4>
+                <ul>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="citas.html">Reservar cita</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; <span id="current-year"></span> Oscar Barber. Todos los derechos reservados.</p>
+            <a href="admin.html" class="admin-link" title="Acceso para el barbero">🔒 Acceso barbero</a>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

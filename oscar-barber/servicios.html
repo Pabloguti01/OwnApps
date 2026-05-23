@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios — Oscar Barber</title>
+    <meta name="description" content="Servicios y precios de Oscar Barber: cortes, barbas, afeitados y mucho más.">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="Oscar Barber — Inicio">
+                <img src="assets/logo.jpg" alt="Oscar Barber" class="logo-img">
+            </a>
+            <nav class="main-nav" aria-label="Navegación principal">
+                <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+                <ul class="nav-list">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="servicios.html" class="active">Servicios</a></li>
+                    <li><a href="citas.html">Reservar cita</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <p class="eyebrow">Catálogo</p>
+                <h1>Servicios y precios</h1>
+                <p class="page-sub">Todos los servicios de nuestra barbería con su duración y precio.</p>
+            </div>
+        </section>
+
+        <section class="services-section">
+            <div class="container">
+                <div class="services-grid services-grid-full" id="services-full-grid">
+                    <!-- Rellenado por JS -->
+                </div>
+                <div class="section-cta">
+                    <a href="citas.html" class="btn btn-primary">Reservar cita ahora</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <img src="assets/logo.jpg" alt="Oscar Barber" class="logo-img logo-img-footer">
+                <p class="footer-tagline">Barbería a domicilio.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Horario</h4>
+                <ul id="footer-schedule"></ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <ul>
+                    <li>🏠 Servicio a domicilio</li>
+                    <li>📞 <a id="footer-phone-link" href="#"></a></li>
+                    <li>✉ <a id="footer-email-link" href="#"></a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Enlaces</h4>
+                <ul>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="citas.html">Reservar cita</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; <span id="current-year"></span> Oscar Barber. Todos los derechos reservados.</p>
+            <a href="admin.html" class="admin-link" title="Acceso para el barbero">🔒 Acceso barbero</a>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
