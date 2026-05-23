@@ -1291,5 +1291,12 @@
                 if (state.wizard.open && state.wizard.step >= 2) renderWizard();
             }
         });
+
+        // Sincronización inicial con PocketBase (re-renderiza admin si está abierto)
+        OBStorage.onSync = () => {
+            if (state.admin.open) renderAdmin();
+            if (state.wizard.open && state.wizard.step >= 2) renderWizard();
+        };
+        OBStorage.init();
     });
 })();

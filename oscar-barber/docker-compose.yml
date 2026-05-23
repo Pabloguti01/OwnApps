@@ -1,0 +1,21 @@
+services:
+  frontend:
+    build: .
+    ports:
+      - "80:80"
+    depends_on:
+      - pocketbase
+    restart: unless-stopped
+
+  pocketbase:
+    build:
+      context: .
+      dockerfile: Dockerfile.pocketbase
+    volumes:
+      - pb_data:/pb/pb_data
+    ports:
+      - "8090:8090"
+    restart: unless-stopped
+
+volumes:
+  pb_data:

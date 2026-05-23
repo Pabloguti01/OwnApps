@@ -4,6 +4,10 @@
    ==================================================== */
 
 window.OB_CONFIG = {
+    pocketbase: {
+        baseUrl: "/pb",   // nginx proxea /pb/ → PocketBase en puerto 8090
+    },
+
     business: {
         name: "OscarBarber",
         tagline: "Barbería a domicilio.",

@@ -2,4 +2,6 @@ CLAUDE.md
 README.md
 .gitignore
 Dockerfile
+Dockerfile.pocketbase
 .dockerignore
+pb_data/

@@ -22,3 +22,6 @@ node_modules/
 config.local.js
 .env
 .env.local
+
+# PocketBase datos (volumen de Docker, no se versiona)
+pb_data/
