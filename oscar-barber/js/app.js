@@ -687,8 +687,25 @@
     // ============================================================
     // ADMIN (con login)
     // ============================================================
+
+    /**
+     * Token de sesión derivado de la contraseña actual.
+     * Así, cuando cambias la contraseña en config.js (o cuando alguien
+     * tenía guardada una sesión del admin antiguo con otro esquema),
+     * la sesión se invalida automáticamente y vuelve a pedir contraseña.
+     */
+    function sessionToken() {
+        const s = (CFG.admin && CFG.admin.password) || "";
+        let hash = 0;
+        for (let i = 0; i < s.length; i++) {
+            hash = ((hash << 5) - hash) + s.charCodeAt(i);
+            hash |= 0;
+        }
+        return "v2:" + Math.abs(hash).toString(36);
+    }
+
     function isAdminAuthenticated() {
-        return sessionStorage.getItem(SESSION_KEY) === "ok";
+        return sessionStorage.getItem(SESSION_KEY) === sessionToken();
     }
 
     function openAdmin() {
@@ -730,7 +747,7 @@
             return false;
         }
         if (pass === expected) {
-            sessionStorage.setItem(SESSION_KEY, "ok");
+            sessionStorage.setItem(SESSION_KEY, sessionToken());
             closeAdminLogin();
             openAdmin();
             return true;
