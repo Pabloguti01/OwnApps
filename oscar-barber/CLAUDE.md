@@ -6,7 +6,7 @@ Funcionalidad principal: gestión de citas online con calendario y panel admin p
 ## Stack y filosofía
 
 - **HTML + CSS + JavaScript vanilla**. Sin frameworks, sin bundlers, sin build step.
-- **Sin backend**. Las citas se guardan en `localStorage` del navegador del cliente.
+- **Backend**: PocketBase (SQLite). Las citas se persisten en el servidor; cualquier cliente que reserve lo verá Oscar en su panel admin.
 - **Arquitectura SPA single-page**: todo el sitio vive en `index.html`. La reserva y el admin son **modales/overlays**, no páginas separadas.
 - Idioma: **español** en todos los textos, formularios y mensajes.
 - Tipografía servida desde Google Fonts (Bebas Neue + Manrope + JetBrains Mono).
@@ -25,14 +25,16 @@ OwnApps/
     ├── css/
     │   └── styles.css         Estilos completos (tema oscuro, ámbar, Bebas Neue)
     ├── js/
-    │   ├── config.js          CONFIG DEL NEGOCIO (editar aquí)
-    │   ├── storage.js         Wrapper sobre localStorage (clave: ob_appointments_v1)
+    │   ├── config.js          CONFIG DEL NEGOCIO (editar aquí) + pocketbase.baseUrl
+    │   ├── storage.js         Caché localStorage + sync PocketBase (write-through)
     │   └── app.js             Todo el JS de UI (bindings, wizard, admin, export CSV, atajos)
+    ├── docker-compose.yml     Orquesta frontend (8766) + PocketBase (8090)
+    ├── Dockerfile             nginx:alpine con nginx.conf personalizado
+    ├── Dockerfile.pocketbase  Alpine + PocketBase v0.22.25
+    ├── nginx.conf             Sirve frontend y proxea /pb/ → PocketBase
     ├── README.md              Documentación de despliegue
     └── CLAUDE.md              Este archivo
 ```
-
-Solo **9 archivos** en el proyecto (incluyendo logo y docs). Estructura plana e intencionadamente simple.
 
 ## Secciones del sitio (`index.html`)
 
@@ -77,7 +79,16 @@ Para que `config.js` sea la fuente única de verdad, los textos críticos del HT
 - `data-bind="hours"` → texto del horario del lunes (ej. "10:00h–14:00h")
 - `data-bind="year"` → año actual
 
-## Esquema de citas en `localStorage`
+## Persistencia: PocketBase
+
+- **Colección**: `appointments` en PocketBase (SQLite bajo el capó).
+- **Admin PocketBase**: `http://localhost:8090/_/` — cuenta `pabloguti1006@gmail.com`.
+- **Reglas de colección**: todas públicas (`""`) para que el frontend sin auth pueda crear/leer/borrar citas.
+- **Proxy nginx**: el frontend llama a `/pb/api/...` y nginx lo reenvía a `http://pocketbase:8090/`.
+- **Patrón de sync**: `storage.js` guarda en `localStorage` de forma síncrona (para que la UI sea inmediata) y lanza un `fetch` async a PocketBase en segundo plano. Al arrancar la página (`OBStorage.init()`), PocketBase sobreescribe el caché local. Si PocketBase está vacío y hay citas en localStorage, las migra automáticamente.
+- **Campos de la colección**: `ob_id`, `created_at`, `service_id`, `service_name`, `duration_min`, `price`, `date`, `start_min`, `end_min`, `customer_name`, `customer_phone`, `customer_email`, `customer_notes`, `address`, `address_notes`, `status`.
+
+## Esquema de citas en `localStorage` (caché)
 
 Clave: `ob_appointments_v1`. Cada cita:
 
@@ -146,7 +157,7 @@ El valor guardado en `sessionStorage` es un **token determinístico derivado de 
 
 **Sincronización entre pestañas**: si en otra pestaña se guarda/elimina una cita, el admin se refresca automáticamente vía evento `storage`.
 
-⚠ **Limitación crítica del admin sin backend**: el admin **solo muestra las citas guardadas en el navegador donde está abierto**. Las reservas las hace el cliente desde SU navegador, no llegan al de Oscar. La notificación por email es la vía real. El admin sirve como vista local + para registrar manualmente citas que Oscar reciba por otros canales.
+✅ **Con PocketBase como backend**: todas las reservas que haga cualquier cliente desde cualquier dispositivo se guardan en el servidor. Oscar las ve todas en su panel admin, independientemente del navegador desde el que acceda.
 
 ⚠ **Seguridad**: la contraseña vive en el JS del cliente; cualquiera con DevTools la ve. Sirve solo para evitar accesos casuales.
 
@@ -163,24 +174,22 @@ El valor guardado en `sessionStorage` es un **token determinístico derivado de 
 
 ## Cómo verlo en local
 
-### Con Docker (recomendado en Linux)
+### Con Docker Compose (recomendado)
 
 ```bash
-# Construir la imagen
 cd OwnApps/oscar-barber
-docker build -t oscar-barber .
+docker compose up -d --build
 
-# Levantar el contenedor
-docker run -d --name oscar-barber -p 8765:80 oscar-barber
-# abrir http://localhost:8765/
+# Frontend:        http://localhost:8766
+# PocketBase admin: http://localhost:8090/_/
 
-# Parar y eliminar
-docker stop oscar-barber && docker rm oscar-barber
+# Parar
+docker compose down
 ```
 
-El `Dockerfile` usa `nginx:alpine` como servidor estático. El `.dockerignore` excluye docs y el propio Dockerfile del build context.
+Los datos de PocketBase se guardan en el volumen Docker `pb_data` y persisten entre reinicios.
 
-### Con Python (Windows / sin Docker)
+### Con Python (sin Docker, solo frontend)
 
 ```powershell
 cd "C:\Users\pablo\OneDrive\Desktop\Claude Projects\OwnApps\oscar-barber"
@@ -226,15 +235,16 @@ python -m http.server 8000
 
 ## Docker
 
-- **Imagen**: `oscar-barber` (basada en `nginx:alpine`)
-- **Puerto**: `8765` del host → `80` del contenedor
-- **Archivos**: `Dockerfile` y `.dockerignore` en la raíz del proyecto
+- **Stack**: `docker-compose.yml` con dos servicios: `frontend` y `pocketbase`
+- **Frontend**: imagen `nginx:alpine` + `nginx.conf` personalizado → puerto `8766`
+- **PocketBase**: imagen Alpine + binario PocketBase v0.22.25 → puerto `8090`
+- **Datos**: volumen Docker `pb_data` (persiste entre reinicios, no se versiona)
 - **Levantado por primera vez**: 2026-05-23
 
 ## Próximos pasos sugeridos
 
 - **Sustituir placeholders por contenido real**: fotos de la galería, foto de Oscar, teléfono real, email real.
-- **Backend para sincronizar citas** entre el navegador del cliente y el del barbero (pospuesto por el usuario el 2026-05-23 — quiere abordarlo "de otra manera"; opciones discutidas y archivadas: Google Apps Script + Sheets, Firebase Firestore, Supabase).
+- ~~**Backend para sincronizar citas**~~ — resuelto el 2026-05-23 con PocketBase.
 - Antes de pasar a producción real: rotar contraseña admin y mover el `emailTo` a un buzón dedicado, no al personal.
 - Activar el envío vía FormSubmit confirmando el primer email de activación.
 - Confirmación por SMS/WhatsApp con la dirección donde se hará el servicio.
