@@ -163,6 +163,25 @@ El valor guardado en `sessionStorage` es un **token determinístico derivado de 
 
 ## Cómo verlo en local
 
+### Con Docker (recomendado en Linux)
+
+```bash
+# Construir la imagen
+cd OwnApps/oscar-barber
+docker build -t oscar-barber .
+
+# Levantar el contenedor
+docker run -d --name oscar-barber -p 8765:80 oscar-barber
+# abrir http://localhost:8765/
+
+# Parar y eliminar
+docker stop oscar-barber && docker rm oscar-barber
+```
+
+El `Dockerfile` usa `nginx:alpine` como servidor estático. El `.dockerignore` excluye docs y el propio Dockerfile del build context.
+
+### Con Python (Windows / sin Docker)
+
 ```powershell
 cd "C:\Users\pablo\OneDrive\Desktop\Claude Projects\OwnApps\oscar-barber"
 python -m http.server 8765
@@ -204,6 +223,13 @@ python -m http.server 8000
   - La contraseña del admin es trivial y descubrible — la "protección" del panel es solo cosmética.
   - **Recomendaciones para producción real**: crear un email dedicado (`oscarbarber.citas@gmail.com` o similar), cambiar la contraseña a algo único y largo, o mover la auth a backend.
 - **Hamburguesa móvil no implementada**: en mobile (<960 px) el menú principal se oculta. Funciona porque solo eran anclas internas, pero idealmente debería haber un toggle.
+
+## Docker
+
+- **Imagen**: `oscar-barber` (basada en `nginx:alpine`)
+- **Puerto**: `8765` del host → `80` del contenedor
+- **Archivos**: `Dockerfile` y `.dockerignore` en la raíz del proyecto
+- **Levantado por primera vez**: 2026-05-23
 
 ## Próximos pasos sugeridos
 
