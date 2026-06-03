@@ -1,0 +1,30 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs / temp
+*.log
+.tmp/
+.cache/
+
+# Node
+node_modules/
+
+# Secretos locales
+.env
+.env.local
+
+# PocketBase datos (volúmenes Docker, no se versionan)
+pb_data/
+
+# espinita-clava vive en su propio repo (github.com/Pabloguti01/espinita-clava)
+# Se mantiene aquí como carpeta hermana del workspace, pero no es parte de OscarBarber.
+espinita-clava/
