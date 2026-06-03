@@ -28,10 +28,36 @@
     </ul>
     <div class="nav-actions">
       <div class="nav-phone"><span class="pulse"></span> <span data-bind="phone">666 666 666</span></div>
-      <button class="btn btn-primary btn-sm" data-action="book">Reservar cita</button>
+      <button class="btn btn-primary btn-sm nav-cta" data-action="book">Reservar cita</button>
+      <button class="nav-burger" id="nav-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-drawer">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </header>
+
+<!-- ====================== MOBILE DRAWER ====================== -->
+<aside class="mobile-drawer" id="mobile-drawer" aria-hidden="true" aria-label="Menú principal">
+  <div class="mobile-drawer-head">
+    <a href="#top" class="brand" data-drawer-close>
+      <img src="assets/logo.jpg" alt="OscarBarber" />
+      <span>OSCAR<span class="accent">BARBER</span><span class="dot"></span></span>
+    </a>
+    <button class="modal-close" id="drawer-close" aria-label="Cerrar menú">✕</button>
+  </div>
+  <nav class="mobile-drawer-nav">
+    <a href="#servicios" data-drawer-close><span class="num">01</span>Servicios</a>
+    <a href="#proceso" data-drawer-close><span class="num">02</span>Cómo funciona</a>
+    <a href="#galeria" data-drawer-close><span class="num">03</span>Galería</a>
+    <a href="#sobre" data-drawer-close><span class="num">04</span>Sobre Oscar</a>
+    <a href="#contacto" data-drawer-close><span class="num">05</span>Contacto</a>
+  </nav>
+  <div class="mobile-drawer-actions">
+    <div class="nav-phone"><span class="pulse"></span> <span data-bind="phone">666 666 666</span></div>
+    <button class="btn btn-primary" data-action="book" data-drawer-close>Reservar cita <span class="arrow">→</span></button>
+  </div>
+</aside>
+<div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop" aria-hidden="true"></div>
 
 <!-- ====================== HERO ====================== -->
 <section class="hero" id="top">

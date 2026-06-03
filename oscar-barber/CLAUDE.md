@@ -170,7 +170,7 @@ El valor guardado en `sessionStorage` es un **token determinístico derivado de 
   - **JetBrains Mono** para detalles, eyebrows, etiquetas y números.
 - **Efectos**: backdrop blur en nav y modales, gradientes radiales detrás del hero, ticker animado, hover lifts, pop-in del check de confirmación.
 - **Logo del cliente** (`assets/logo.jpg`, negro sobre fondo blanco) se renderiza con `filter: invert(1)` + `mix-blend-mode: screen` para que se vea blanco sobre fondo oscuro y el fondo blanco se funda.
-- **Responsive**: breakpoints en 960 px (tablet) y 560 px (móvil). Nav hamburguesa no implementado todavía (las anclas siguen funcionando, solo se oculta el menú en móvil — pendiente de un toggle si se ve necesario).
+- **Responsive**: breakpoints en 960 px (tablet) y 560 px (móvil). **Hamburguesa móvil implementada el 2026-05-25** (≤960 px): botón en la barra superior que abre un **drawer lateral izquierdo** con las secciones de la página, teléfono y CTA "Reservar cita". El drawer se cierra al pulsar una sección, el backdrop, la ✕, ESC o al ensanchar la ventana a desktop. El **panel admin también es usable en móvil**: barra superior con wrap, KPIs en grid 2×2 (o 1 col en <400 px), timeline con columna de hora más estrecha, appointment cards más compactas y el detail drawer ocupa el 100 % del ancho.
 
 ## Cómo verlo en local
 
@@ -222,8 +222,8 @@ python -m http.server 8000
 
 ## Limitaciones conocidas
 
-- **Las citas solo viven en el navegador del cliente** que las creó. Oscar **no las recibe** automáticamente en el admin local — la notificación por email es la vía real. Pendiente: sincronización vía backend (pospuesta por decisión del usuario el 2026-05-23 — quiere abordarlo "de otra manera" más adelante).
-- Dos clientes en dispositivos distintos pueden reservar el mismo hueco (no se sincronizan hasta tener backend).
+- ~~**Las citas solo viven en el navegador del cliente** que las creó~~ → **Resuelto el 2026-05-23** con la integración de PocketBase. Las reservas se guardan en el servidor y Oscar las ve todas en su admin desde cualquier navegador/dispositivo. La notificación por email sigue siendo el aviso en tiempo real, pero ya no es la única vía.
+- ~~Dos clientes en dispositivos distintos pueden reservar el mismo hueco~~ → **Resuelto el 2026-05-23**: con PocketBase como fuente de verdad, los slots ocupados se ven en todos los dispositivos. (Nota: sigue habiendo una ventana de carrera muy breve entre que dos clientes piden el mismo slot al mismo segundo, porque la revalidación final es contra la caché local; aceptable para el volumen actual.)
 - **Galería con placeholders**: 7 huecos con rayas en lugar de fotos reales. Pendiente de que Oscar proporcione fotos de sus cortes.
 - **Retrato de Oscar**: placeholder en la sección "Sobre Oscar". Pendiente foto.
 - **Teléfono y email del negocio son placeholder** (`666 666 666` y `hola@oscarbarber.es`). Hay que cambiarlos por los reales antes de publicar.
@@ -231,7 +231,7 @@ python -m http.server 8000
   - El email recibirá spam con el tiempo (scrapers de GitHub).
   - La contraseña del admin es trivial y descubrible — la "protección" del panel es solo cosmética.
   - **Recomendaciones para producción real**: crear un email dedicado (`oscarbarber.citas@gmail.com` o similar), cambiar la contraseña a algo único y largo, o mover la auth a backend.
-- **Hamburguesa móvil no implementada**: en mobile (<960 px) el menú principal se oculta. Funciona porque solo eran anclas internas, pero idealmente debería haber un toggle.
+- ~~**Hamburguesa móvil no implementada**~~ → **Resuelto el 2026-05-25**: a ≤960 px aparece un botón hamburguesa que abre un drawer lateral izquierdo con las secciones, teléfono y CTA. Toda la app (incluido el admin) es responsiva en móvil.
 
 ## Docker
 
@@ -248,7 +248,6 @@ python -m http.server 8000
 - Antes de pasar a producción real: rotar contraseña admin y mover el `emailTo` a un buzón dedicado, no al personal.
 - Activar el envío vía FormSubmit confirmando el primer email de activación.
 - Confirmación por SMS/WhatsApp con la dirección donde se hará el servicio.
-- Implementar nav hamburguesa para móvil.
 - Considerar GitHub Pages para hospedar el sitio (`Settings → Pages → main branch / oscar-barber folder`) — gratis y se actualiza con cada push.
 
 ## Historial de decisiones tomadas
@@ -270,6 +269,8 @@ python -m http.server 8000
 - **Buffer de 30 min entre citas a domicilio** (`booking.travelBufferMin`): el algoritmo de slots descarta cualquier hora que no deje ese margen antes/después de una cita existente. Esencial porque Oscar tiene que desplazarse entre clientes.
 - **Hard delete al cancelar citas en admin** (vs soft-delete con status=cancelled): más simple, menos campos a filtrar. Si en el futuro hace falta histórico de canceladas, hay que cambiar `OBStorage.remove` por `OBStorage.markCancelled`.
 - **Bug del admin sin pedir contraseña (resuelto el 2026-05-23)**: tras el rediseño, el panel admin saltaba directo sin pedir login. Causa: el `sessionStorage` mantenía la marca `"ok"` guardada por la versión anterior del admin (misma clave `ob_admin_session_v1`, mismo valor). Como sessionStorage persiste mientras la pestaña esté abierta, el nuevo código la aceptaba como sesión válida. **Fix**: el valor ahora es un token determinístico derivado del password actual (`sessionToken()` en `app.js`). El "ok" antiguo deja de coincidir y se fuerza login. Además, cualquier cambio futuro en `CFG.admin.password` invalida automáticamente las sesiones activas.
+- **Limitación de citas solo locales — resuelta el 2026-05-23**: inicialmente se había pospuesto la sincronización vía backend ("se abordaría de otra manera más adelante"). En la misma jornada se cambió de criterio y se integró PocketBase como backend real. A partir de esa integración, cualquier reserva hecha desde cualquier dispositivo queda persistida en el servidor y Oscar la ve en su admin sin depender del email. La caché en localStorage se mantiene solo para que la UI sea inmediata y soporte caídas momentáneas del backend.
+- **Responsividad móvil completa + drawer lateral izquierdo (2026-05-25)**: a ≤960 px el menú horizontal se oculta y aparece un botón hamburguesa que despliega un drawer fijo desde la izquierda (320 px / máx 84 vw, alto `100dvh`). Contiene logo, las 5 secciones del sitio en estilo Bebas Neue numeradas, teléfono y CTA "Reservar cita". Cierre: ✕, backdrop, ESC, clic en una sección o al volver a desktop. Se usa `visibility: hidden` con `transition-delay` igual a la duración del slide para que el drawer no quede focusable cuando está cerrado pero la animación de cierre sí sea visible. **Panel admin adaptado a móvil**: `admin-bar` con `flex-wrap`, reloj oculto (`#admin-clock`), botones pequeños, KPIs en 2 columnas (o 1 col en <400 px), `timeline-row` con columna de hora de 56–64 px, `appt-card` con `meta` apilada y sin el spacer central, `detail-drawer` al 100 % del ancho. Otros tweaks responsive: hero h1 con `clamp(64px, 14vw, 168px)` y `hero-meta` en grid 2×2, modal-wizard con `step-pill` apilado sobre el título, calendario y slots más compactos, CTA banner con botón a ancho completo, footer con filas apiladas.
 
 ## Convenciones para futuros cambios
 

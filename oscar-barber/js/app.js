@@ -1223,11 +1223,62 @@
     }
 
     // ============================================================
+    // MOBILE DRAWER (hamburguesa + barra lateral)
+    // ============================================================
+    function initMobileDrawer() {
+        const burger = document.getElementById("nav-burger");
+        const drawer = document.getElementById("mobile-drawer");
+        const backdrop = document.getElementById("mobile-drawer-backdrop");
+        const closeBtn = document.getElementById("drawer-close");
+        if (!burger || !drawer || !backdrop) return;
+
+        function openDrawer() {
+            drawer.classList.add("open");
+            backdrop.classList.add("open");
+            burger.classList.add("open");
+            burger.setAttribute("aria-expanded", "true");
+            drawer.setAttribute("aria-hidden", "false");
+            document.body.classList.add("drawer-open");
+        }
+        function closeDrawer() {
+            drawer.classList.remove("open");
+            backdrop.classList.remove("open");
+            burger.classList.remove("open");
+            burger.setAttribute("aria-expanded", "false");
+            drawer.setAttribute("aria-hidden", "true");
+            document.body.classList.remove("drawer-open");
+        }
+        function toggleDrawer() {
+            if (drawer.classList.contains("open")) closeDrawer();
+            else openDrawer();
+        }
+
+        burger.addEventListener("click", toggleDrawer);
+        closeBtn?.addEventListener("click", closeDrawer);
+        backdrop.addEventListener("click", closeDrawer);
+
+        // Cualquier enlace o acción dentro del drawer marcado con
+        // data-drawer-close cierra el drawer al activarse.
+        drawer.querySelectorAll("[data-drawer-close]").forEach(el => {
+            el.addEventListener("click", () => closeDrawer());
+        });
+
+        // Si la ventana se ensancha a desktop, asegurarse de cerrar el drawer.
+        const mq = window.matchMedia("(min-width: 961px)");
+        mq.addEventListener("change", e => { if (e.matches) closeDrawer(); });
+
+        // Exponer para que ESC pueda cerrarlo desde el listener global.
+        window.__obCloseDrawer = closeDrawer;
+        window.__obIsDrawerOpen = () => drawer.classList.contains("open");
+    }
+
+    // ============================================================
     // INIT
     // ============================================================
     document.addEventListener("DOMContentLoaded", () => {
         applyBindings();
         initSmoothScroll();
+        initMobileDrawer();
         initLogoSecret();
         initAdminClock();
 
@@ -1281,6 +1332,7 @@
                 if (document.getElementById("admin-login-modal").classList.contains("open")) { closeAdminLogin(); return; }
                 if (state.wizard.open) { closeWizard(); return; }
                 if (state.admin.open) { closeAdmin(); return; }
+                if (window.__obIsDrawerOpen && window.__obIsDrawerOpen()) { window.__obCloseDrawer(); return; }
             }
         });
 

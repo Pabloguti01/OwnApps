@@ -10,18 +10,30 @@ Cada subdirectorio es un proyecto independiente.
 Web completa para **Oscar Barber**, peluquería a domicilio. Incluye landing, catálogo de servicios, sistema de reservas con calendario y panel de administración.
 
 - **Stack**: HTML + CSS + JavaScript vanilla (sin frameworks, sin build step)
-- **Persistencia**: `localStorage` (sin backend por ahora)
+- **Persistencia**: PocketBase (SQLite) — frontend 8766, PocketBase 8090
 - **Notificaciones**: email al barbero vía FormSubmit
-- **Panel admin**: en `/oscar-barber/admin.html`
+- **Panel admin**: modal sobre `index.html`
 
-Más detalles en [`oscar-barber/README.md`](./oscar-barber/README.md) y [`oscar-barber/CLAUDE.md`](./oscar-barber/CLAUDE.md).
+Más detalles en [`oscar-barber/CLAUDE.md`](./oscar-barber/CLAUDE.md).
+
+### [espinita-clava/](./espinita-clava/)
+
+Web completa para **Espinita Clavá**, restaurante de cocina andaluza moderna. Incluye landing, carta, galería, formulario de petición de reserva y panel admin.
+
+- **Stack**: HTML + CSS + JavaScript vanilla, multi-página
+- **Persistencia**: PocketBase (SQLite) con migración auto-aplicada — frontend 8767, PocketBase 8091
+- **Notificaciones**: email al restaurante vía FormSubmit
+- **Panel admin**: inyectado dinámicamente desde cualquier página (long-press en logo o `[ADMIN]` en footer)
+
+Más detalles en [`espinita-clava/CLAUDE.md`](./espinita-clava/CLAUDE.md).
 
 ## Cómo ejecutar cualquiera de los proyectos
 
 ```bash
 cd <subdirectorio>
+docker compose up -d --build
+# o, sin Docker:
 python -m http.server 8000
-# luego abrir http://localhost:8000/
 ```
 
 ## Licencia
